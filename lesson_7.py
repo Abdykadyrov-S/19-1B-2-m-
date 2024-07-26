@@ -44,11 +44,41 @@ def add_student():
     
     connect.commit() 
 
-add_student()
+# add_student()
 
 def all_student():
     cursor.execute("SELECT * FROM students")
     students = cursor.fetchall()
     print(students)
 
-all_student()
+# all_student()
+
+def delete_student():
+    user_id = int(input("Введите id студента: "))
+    cursor.execute(f"SELECT id, full_name FROM students WHERE id = {user_id}")
+    student = cursor.fetchone()
+
+    if student:        
+        cursor.execute(f"DELETE FROM students WHERE id = {user_id}")
+        connect.commit()
+        print(f"Студент {student} удален")
+    else:
+        print("Такого студента нет в табели")
+
+# delete_student()
+
+def update_student():
+    user_id = int(input("Введите id студента: "))
+    user_full_name = input("Введите имя: ")
+    user_hobby = input("Введите хобби: ")
+    user_phone_number = int(input("Введите номер телефона: "))
+    user_birth_date = input("Введите дату рождения: ")
+    user_mark = float(input("Введите новую оценку: "))
+    user_mentor = bool(input("Стал студент ментором?: "))
+
+    cursor.execute("""UPDATE students SET 
+                   full_name = ?, hobby = ?, phone_number = ?, 
+                   birth_date = ?, mark = ?, is_mentor = ? WHERE id = ?""", (user_full_name, user_hobby, user_phone_number, user_birth_date, user_mark, user_mentor, user_id))
+    connect.commit()
+
+update_student()
