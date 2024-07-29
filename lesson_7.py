@@ -81,4 +81,14 @@ def update_student():
                    birth_date = ?, mark = ?, is_mentor = ? WHERE id = ?""", (user_full_name, user_hobby, user_phone_number, user_birth_date, user_mark, user_mentor, user_id))
     connect.commit()
 
-update_student()
+# update_student()
+
+def update_student_mark():
+    user_id = int(input("Введите id студента: "))
+    user_mark = float(input("Введите новую оценку: "))
+
+    cursor.execute("""UPDATE students SET 
+                mark = ? + ? WHERE id = ?""", (user_mark, user_mark, user_id))
+    connect.commit()
+
+update_student_mark()
